@@ -1,95 +1,90 @@
+import json
+from .models import Tasks
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Tasks
-import json, time, random
+from django.core.exceptions import ObjectDoesNotExist
 
 
 
-# Create your views here.
 def main(req):
     if req.method == 'GET':
-        tasks = Tasks.objects.all()
-        return render(req, 'index.html', {"tasks": tasks})
-
-    return HttpResponse("You can't access the site", status=405)
+        return render(req, 'index.html')
+    
+    return HttpResponse("You can't access the site.", status=403)
 
 
 
 def get_tasks(req):
     if req.method == 'GET':
-        tasks = Tasks.objects.all()
-        return JsonResponse({"tasks": list(tasks.values())})
+        tasks = Tasks.objects.all().values()
+        return JsonResponse({"tasks": list(tasks)})
     
-    return HttpResponse('Invalid http method', status=405)
+    return HttpResponse('Invalid HTTP method.', status=405)
 
 
 
 def add_task(req):
     if req.method == 'POST':
-        content = json.loads(req.body)['content']
-    
-        if content:
-            task = Tasks(content=content)
-            task.save()
-            return JsonResponse({"task_id": task.task_id})
+        try:
+            data = json.loads(req.body)
+            content = data['content']
 
-        return HttpResponse(
-            'No data was sent in the request', 
-            status=404, 
-            content_type='text/plain'
-        )
-    
-    return HttpResponse('Invalid http method', status=405)
-    
+            if content:
+                task = Tasks(content=content)
+                task.save()
+                return JsonResponse({"task_id": task.task_id}, status=201)
+            else:
+                return JsonResponse({'error': 'Content is missing in the request.'}, status=400)
 
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data in the request.'}, status=400)
+
+    return HttpResponse('Invalid HTTP method.', status=405)
 
 
 
 def delete_task(req):
     if req.method == 'DELETE':
-        task_id = json.loads(req.body)['task_id']
+        try:
+            data = json.loads(req.body)
+            task_id = data['task_id']
 
-        if task_id:
-            Tasks.objects.get(task_id=task_id).delete()
-            return HttpResponse(
-                'removed item', 
-                status=200, 
-                content_type='text/plain'
-            )
+            if task_id:
+                try:
+                    task = Tasks.objects.get(task_id=task_id)
+                    task.delete()
+                    return HttpResponse('The resource was removed from the registry.', status=200)
+                except ObjectDoesNotExist:
+                    return HttpResponse('The task does not exist.', status=404)
+            else:
+                return JsonResponse({'error': 'Task ID is missing in the request.'}, status=400)
 
-        return HttpResponse(
-            'Item id not sent', 
-            status=404, 
-            content_type='text/plain'
-        )
-    
-    return HttpResponse('Invalid http method', status=405)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data in the request.'}, status=400)
 
-    
-
+    return HttpResponse('Invalid HTTP method.', status=405)
 
 
 
 def update_task(req):
     if req.method == 'PATCH':
-        data = json.loads(req.body)
+        try:
+            data = json.loads(req.body)
+            task_id = data['task_id']
+            status = data['status']
 
-        if data['task_id']:
-            task = Tasks.objects.get(task_id=data['task_id'])
-            task.status = data['status']
-            task.save()
+            if task_id:
+                try:
+                    task = Tasks.objects.get(task_id=task_id)
+                    task.status = status
+                    task.save()
+                    return HttpResponse('The resource was updated.', status=200)
+                except ObjectDoesNotExist:
+                    return HttpResponse('The task does not exist.', status=404)
+            else:
+                return JsonResponse({'error': 'Invalid data in the request.'}, status=400)
 
-            return HttpResponse(
-                'Item updated', 
-                status=200, 
-                content_type='text/plain'
-            )
-        
-        return HttpResponse(
-            'No data was sent in the request', 
-            status=404, 
-            content_type='text/plain'
-        )
-        
-    return HttpResponse('Invalid http method', status=405)
-    
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data in the request.'}, status=400)
+
+    return HttpResponse('Invalid HTTP method.', status=405)
