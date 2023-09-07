@@ -1,0 +1,333 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --royal-blue: #6C5DD2;
+    --charcoal: #1A1D26;
+    --light-steel-blue: #BFC8DC;
+    --fire-engine-red: #ECB0CC;
+    --baby-blue: #ECF0F9;
+    --midnight-black: #01040D;
+    --gunmetal-gray: #43464F;
+    --turquoise: #5DDCD1;
+    --lavender-blue: #8674FF;
+    --crimson: #EA5551;
+
+    --radius: 10px;
+}
+
+body {
+    background-color: var(--midnight-black);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: var(--light-steel-blue);
+}
+
+/* body * {outline: 1px solid red;} */
+
+.container {
+    margin: 0 auto;
+    width: min(400px, 90%);
+    height: 90vh;
+    padding-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header__picture {
+    width: 12%;
+    max-width: 75px;
+}
+
+.header__img {
+    display: block;
+    width: 100%;
+}
+
+.header__title {
+    font-size: 20px;
+    flex-grow: 1;
+    text-transform: uppercase;
+}
+
+.header__link {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.header__icon {
+    width: 35px;
+    height: auto;
+    fill: var(--royal-blue);
+}
+
+
+
+.tasks {
+    user-select: none;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.tasks:not(:has(.task))::before {
+    content: 'There are no pending tasks';
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    color: var(--charcoal);
+    font-weight: 500;
+    padding: 40px;
+
+    animation-name: showText;
+    animation-duration: .3s;
+}       
+
+.task {
+    flex-shrink: 0;
+    display: flex;
+    background-color: var(--charcoal);
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    overflow: hidden;
+    transition: border-color .1s;
+    margin-top: 10px;
+
+    animation-name: addTask;
+    animation-duration: .3s;
+}
+
+.task:hover {
+    border: 1px solid var(--royal-blue);
+}
+
+.task__label {
+    padding: 10px;    
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    width: 18px;
+    height: auto;
+}
+
+.task__icon {
+    display: flex;
+    fill: var(--royal-blue);
+}
+
+.task__icon--checked {
+    display: none;
+    fill: var(--turquoise);
+}
+
+/* ! Arreglar este bug de desborde de texto */
+/* .task__text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 312px;
+} */
+
+.task__cta {
+    padding: 0 10px;
+    display: grid;
+    place-items: center;
+    background-color: inherit;
+    border: none;
+}
+
+
+.task__cta-icon {
+    fill: var(--light-steel-blue);
+}
+
+.task__cta:hover .task__cta-icon {
+    fill: var(--crimson);
+}
+
+.task:has(:checked) .task__icon {
+    display: none;
+}
+
+.task:has(:checked) .task__icon--checked,
+.task:has(:checked) .task__text {
+    display: block;
+    text-decoration: line-through;
+    color: var(--gunmetal-gray);
+}
+
+
+
+.form {
+    display: flex;
+    gap: 8px;
+    height: 45px;
+}
+
+.form__input {
+    flex-grow: 1;
+    border-radius: var(--radius);
+    outline: none;
+    border: none;
+    padding: 0 10px;
+    font-size: 16px;
+    background-color: var(--charcoal);
+    color: inherit;
+}
+
+.form__input::placeholder {
+    color: var(--gunmetal-gray);
+}
+
+.form__input:hover {
+    outline: 1px solid var(--royal-blue);
+}
+.form__input:focus {
+    outline: 1.5px solid var(--royal-blue);
+}
+
+.form__cta {
+    background-color: var(--royal-blue);
+    border: none;
+    border-radius: var(--radius);
+    padding: 13px;
+    display: grid;
+    place-items: center;
+}
+
+.form__cta:hover {
+    background-color: var(--lavender-blue);
+}
+.form__cta:active {
+    background-color: var(--royal-blue);
+}
+
+.form__cta-icon {
+    fill: var(--baby-blue);
+}
+
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+
+
+
+.remove {
+    animation-name: removeTask;
+    animation-duration: .3s;
+    animation-fill-mode: forwards;
+}
+
+
+
+
+@media (min-width: 390px) {
+    .header__link {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        height: max-content;
+    }
+
+    .container {
+        padding: 50px 0;
+        gap: 30px;
+        height: 100vh;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
+    .header__title {
+        flex-grow: 0;
+        font-size: 30px;
+    }
+
+    .tasks {
+        order: 1;
+    }
+
+    .figure-left,
+    .figure-right {
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 60%;
+        background-repeat: no-repeat;
+    }
+
+    .figure-left {
+        background-image: url('./../img/figure-left.svg');
+        top: 0;
+        left: 0;
+        background-size: contain;
+        background-position: left top;
+    }
+    .figure-right {
+        background-image: url('./../img/figure-right.svg');
+        right: 0;
+        bottom: 0;
+        background-size: contain;
+        background-position: right bottom;
+    }   
+}
+
+
+
+
+
+
+@keyframes addTask {
+    from {
+        opacity: 0;
+        height: 0;
+        padding: 0;
+    }
+
+    to {
+        opacity: 1;
+        height: 45px;
+        padding: 10px 0;
+    }
+}
+
+
+@keyframes removeTask {
+    100% {
+        margin-top: 0;
+        opacity: 0;
+        height: 0;
+    }
+}
+
+@keyframes showText {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
