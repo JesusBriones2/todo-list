@@ -67,8 +67,16 @@
 
 
   function addTask(content) {
-    Fetch("/add_task/", "POST", { content: content }, (data) => {
-      createElementTask(data.task_id, content);
+    const id = Math.fround(Math.floor(Date.now() * (Math.random() * 100)));
+    createElementTask(id, content);
+
+    Fetch("/add_task/", "POST", 
+    {
+      content: content, 
+      task_id: id  
+    },
+    (data) => {
+      console.log(data);
     });
   }
 
@@ -89,11 +97,13 @@
 
 
   function deleteTask(task) {
+    task.classList.add("task--remove");
+    task.addEventListener("animationend", () => {
+      task.remove();
+    });
+
     Fetch("/delete_task/", "DELETE", { task_id: task.id }, (data) => {
-      task.classList.add("task--remove");
-      task.addEventListener("animationend", () => {
-        task.remove();
-      });
+      console.log(data);  
     });
   }
 

@@ -27,12 +27,13 @@ def add_task(req):
     if req.method == 'POST':
         try:
             data = json.loads(req.body)
+            task_id = data['task_id']
             content = data['content']
 
-            if content:
-                task = Tasks(content=content)
+            if content and task_id:
+                task = Tasks(task_id=task_id, content=content)
                 task.save()
-                return JsonResponse({"task_id": task.task_id}, status=201)
+                return HttpResponse('Resource created successfully', status=201)
             else:
                 return JsonResponse({'error': 'Content is missing in the request.'}, status=400)
 
