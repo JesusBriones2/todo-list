@@ -76,7 +76,7 @@
       task_id: id  
     },
     (data) => {
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -89,7 +89,7 @@
         status: status,
       },
       (data) => {
-        console.log(data);
+        // console.log(data);
       }
     );
   }
@@ -103,7 +103,7 @@
     });
 
     Fetch("/delete_task/", "DELETE", { task_id: task.id }, (data) => {
-      console.log(data);  
+      // console.log(data);
     });
   }
 

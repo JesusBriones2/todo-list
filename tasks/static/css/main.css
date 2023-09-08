@@ -276,7 +276,7 @@ body {
 
 
 
-@media (min-width: 390px) {
+@media (min-width: 450px) {
     .header__link {
         position: absolute;
         top: 20px;
