@@ -1,3 +1,5 @@
+@import url('./../fonts/font.css');
+
 * {
     padding: 0;
     margin: 0;
@@ -5,34 +7,44 @@
 }
 
 :root {
-    --royal-blue: #6C5DD2;
-    --lavender-blue: #8674FF;
+    --white: #FFFFFF;
+    --dark-blue: #24315D;
+    --midnight-blue: #0A112B;
+    --light-blue: #D8E1FF;
+    --royal-blue: #3E528F;
+    --light-periwinkle-blue: #8593C3;
+    --light-cornflower-blue: #90ADFF;
+    --periwinkle-blue: #6F88D1;
+    --cornflower-blue: #6374B2;
     --turquoise: #5DDCD1;
-    --light-steel-blue: #BFC8DC;
-    --baby-blue: #ECF0F9;
-    --fire-engine-red: #ECB0CC;
-    --crimson: #EA5551;
-    --midnight-black: #01040D;
-    --charcoal: #1A1D26;
-    --gunmetal-gray: #43464F;
+    --salmon-pink: #FB8181;
 
-    --radius: 10px;
+    --radius: 8px;
+    --height-elem: 50px;
 }
 
 body {
-    background-color: var(--midnight-black);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    color: var(--light-steel-blue);
+    font-family: nunito, sans-serif;
+    font-weight: 500;
+
+    background-color: var(--midnight-blue);
+    color: var(--white);
 }
 
-/* body * {outline: 1px solid red;} */
+body * {
+    outline: 1px solid red;
+}
 
 .container {
-    margin: 0 auto;
-    width: min(400px, 90%);
     height: 100dvh;
-    padding: 20px 0;
+}
+
+.todo-container {
+    position: relative;
+    margin: 0 auto;
+    max-width: 550px;
+    height: 100%;
+    padding: 20px;
 
     display: flex;
     flex-direction: column;
@@ -49,279 +61,288 @@ body {
 
 .header__picture {
     width: 12%;
-    max-width: 75px;
+    max-width: 50px;
 }
 
 .header__img {
-    display: block;
     width: 100%;
     height: auto;
+    display: block;
 }
 
 .header__title {
-    font-size: 20px;
     flex-grow: 1;
-    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 900;
 }
 
 .header__link {
-    width: 35px;
-    display: flex;
-}
-
-.header__icon {
-    width: 100%;
-    height: auto;
-    fill: var(--royal-blue);
-}
-
-.header__icon:hover {
-    fill: var(--lavender-blue);
-}
-
-
-
-.tasks {
-    user-select: none;
-    overflow: auto;
-
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.tasks:not(:has(.task))::before {
-    content: 'There are no pending tasks';
-    display: block;
-    text-align: center;
-    font-size: 40px;
-    color: var(--charcoal);
-    font-weight: 500;
-    padding: 40px;
-
-    animation-name: showText;
-    animation-duration: .3s;
-}
-
-@keyframes showText {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-
-
-
-.task {
-    flex-shrink: 0;
-    overflow: hidden;
-    height: 55px;
-    
-    animation-name: addTask;
-    animation-duration: .3s;
-    animation-fill-mode: forwards;
-}
-
-.task__container {
-    background-color: var(--charcoal);
-    border-radius: var(--radius);
-    border: 1px solid transparent;
-    overflow: hidden;
-    transition: border-color .1s;
-    
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.task__container:hover {
-    border-color: var(--royal-blue);
+.header__link-text {
+    color: var(--white);
+    display: none;
+}
+
+.header__link:hover .header__link-text {
+    text-decoration: underline;
+}
+
+.header__link:hover .header__icon {
+    fill: var(--light-blue);
+}
+
+.header__icon {
+    fill: var(--periwinkle-blue);
+    width: 30px;
+    height: auto;
+    transition: fill .2s;
+}
+
+
+
+.tasks {
+    flex-grow: 1;
+    overflow: auto;
+    display: grid;
+    align-content: start;
+}
+
+.tasks::-webkit-scrollbar {
+    width: 0;
+}
+
+.task {
+    margin-bottom: 5px;
+    height: 50px;
+    padding-left: 10PX;
+    background-color: var(--royal-blue);
+    border-radius: var(--radius);
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    animation-name: add-task;
+    animation-duration: .2s;
 }
 
 .task__checkbox {
     display: flex;
-    margin-left: 10px;
 }
 
 .task__icon {
-    fill: var(--royal-blue);
-}
-
-.icon {
+    fill: var(--periwinkle-blue);
     width: 18px;
     height: auto;
 }
 
-.task__icon--checked {
-    display: none;
+.task__icon--check {
     fill: var(--turquoise);
-}
-
-.task--checked .task__icon {
     display: none;
-}
-
-.task--checked .task__icon--checked,
-.task--checked .task__text {
-    display: block;
-    text-decoration: line-through;
-    color: var(--gunmetal-gray);
 }
 
 .task__text {
     flex-grow: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     overflow: hidden;
+    user-select: none;
+    color: var(--light-blue);
+    font-size: 1.2rem;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
 .task__cta {
+    height: inherit;
     padding: 10px;
-    background-color: inherit;
+    background: inherit;
     border: none;
-
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .task__cta-icon {
-    fill: var(--light-steel-blue);
+    width: 18px;
+    height: auto;
+    fill: var(--white);
+}
+
+.task--completed .task__text {
+    text-decoration: line-through;
+    color: var(--light-periwinkle-blue);
+}
+
+.task--completed .task__icon {
+    display: none;
+}
+
+.task--completed .task__icon--check {
+    display: block;
 }
 
 .task__cta:hover .task__cta-icon {
-    fill: var(--crimson);
+    fill: var(--salmon-pink);
+}
+
+
+
+.tasks:not(:has(.task)) {
+    display: flex;
+    align-items: center;
+}
+
+.tasks:not(:has(.task))::before {
+    content: "There are no pending tasks";
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--dark-blue);
+    text-align: center;
+    padding: 0 40px;
+    opacity: 0;
+    animation: showMessage .2s forwards;
 }
 
 .task--remove {
-    animation-name: removeTask;
-    animation-duration: .5s;
+    animation-name: remove-task;
+    animation-duration: .2s;
 }
 
-@keyframes addTask {
-    from {
-        opacity: 0;
-        height: 0;
-    }
-
-    to {
-        height: 55px;
+@keyframes showMessage {
+    100% {
         opacity: 1;
     }
 }
 
-
-@keyframes removeTask {
-    50% {
-        opacity: 0;
-    }
-
-    100% {
+@keyframes add-task {
+    from {
         height: 0;
         opacity: 0;
     }
+
+    to {
+        opacity: 1;
+        height: 45px;
+    }
+}
+
+@keyframes remove-task {
+    100% {
+        height: 0;
+        opacity: 0;
+        margin: 0;
+    }
 }
 
 
 
-.form {
+.form  {
+    height: 45px;
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .form__input {
+    width: 100px;
+    height: inherit;
     flex-grow: 1;
-    border-radius: var(--radius);
+    padding: 0 15px;
+    background-color: var(--dark-blue);
     outline: none;
     border: none;
-    padding: 10px;
-    font-size: 17px;
-    background-color: var(--charcoal);
-    color: inherit;
+    border-radius: var(--radius);
+    
+    color: var(--light-blue);
+    font-family: inherit;
+    font-size: 1.2rem;
 }
 
 .form__input::placeholder {
-    color: var(--gunmetal-gray);
-}
-
-.form__input:hover {
-    outline: 1px solid var(--royal-blue);
-}
-.form__input:focus {
-    outline: 1.5px solid var(--royal-blue);
+    color: var(--light-periwinkle-blue);
 }
 
 .form__cta {
-    background-color: var(--royal-blue);
-    border-radius: var(--radius);
+    padding: 0 14px;
+    background-color: var(--white);
     border: none;
-    padding: 13px;
-
-    display: grid;
-    place-items: center;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
 }
 
 .form__cta:hover {
-    background-color: var(--lavender-blue);
+    background-color: var(--light-cornflower-blue);
 }
 .form__cta:active {
-    background-color: var(--royal-blue);
+    background-color: var(--white);
 }
 
-.form__cta-icon {
-    fill: var(--baby-blue);
-}
-
-
-::-webkit-scrollbar {
-    width: 0;
+.form__icon {
+    width: 18px;
+    height: auto;
+    fill: var(--dark-blue);
 }
 
 
 
-@media (min-width: 450px) {
-    .header__link {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-    }
-
+@media (width > 450px) {
     .container {
-        padding: 25px 0 40px;
-        gap: 30px;
-        height: 100vh;
+        padding: 40px 10px;
     }
 
-    .header {
-        justify-content: center;
+    .todo-container {
+        background-color: var(--cornflower-blue);
+        padding: 30px;
+        border-radius: var(--radius);
+        position: relative;
+        gap: 30px;
     }
 
     .header__title {
-        flex-grow: 0;
-        font-size: 30px;
+        font-size: 2rem;
+    }
+
+    .header__link {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .header__icon {
+        fill: var(--midnight-blue);
     }
 
     .tasks {
         order: 1;
     }
 
-    .shape-left,
-    .shape-right {
-        position: absolute;
-        z-index: -1;
-        width: 100%;
-        height: 60%;
-        background-repeat: no-repeat;
-        background-size: contain;
+    .tasks:not(:has(.task))::before {
+        color: var(--royal-blue);
+    }
+}
+
+@media (width >  750px) {
+    .todo-container {
+        position: static;
     }
 
-    .shape-left {
-        background-image: url('./../img/figure-left.svg');
+    .header__link-text {
+        display: block;
+    }
+
+    .wave {
+        position: absolute;
+        z-index: -1;
         top: 0;
         left: 0;
-        background-position: left top;
+        width: 100%;
+        height: 100%;
+        background-image: url('./../img/wave.svg');
+        background-size: 100%;
+        background-repeat: no-repeat;
     }
-    .shape-right {
-        background-image: url('./../img/figure-right.svg');
-        right: 0;
-        bottom: 0;
-        background-position: right bottom;
-    }   
 }
