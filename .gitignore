@@ -3,3 +3,4 @@ __pycache__
 eslintrc.json
 migrations/*
 node_modules
+db.sqlite3
