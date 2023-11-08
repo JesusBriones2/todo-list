@@ -1,2 +1,5 @@
 .vscode
-design
+__pycache__
+eslintrc.json
+migrations/*
+node_modules

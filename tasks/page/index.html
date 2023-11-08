@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
 
-    <link rel="stylesheet" href="./base.css" />
-    <link rel="stylesheet" href="./fonts/font.css" />
-    <link rel="stylesheet" href="./main.css" />
+    <link rel="shortcut icon" href="assets/img/icon-check.svg" type="image/x-icon">
 
-    <script defer src="./script.js"></script>
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/fonts/font.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+
     <script
       src="https://kit.fontawesome.com/40d9a826da.js"
       crossorigin="anonymous"
     ></script>
+    <script defer type="module" src="assets/js/script.js"></script>
   </head>
 
   <body>
@@ -22,7 +24,7 @@
         <div class="logo">
           <img
             class="logo__img"
-            src="./img/icon-check.svg"
+            src="assets/img/icon-check.svg"
             alt="icono-de-checkbox"
           />
           <h1 class="logo__title">Todo List</h1>
@@ -30,11 +32,12 @@
 
         <form class="form">
           <input
-            class="form__input"
-            type="text"
-            placeholder="Agregar item..."
+          class="form__input"
+          type="text"
+          placeholder="Agregar item..."
           />
           <button class="fa-solid fa-plus form__button"></button>
+          {% csrf_token %}
         </form>
 
         <div class="links">

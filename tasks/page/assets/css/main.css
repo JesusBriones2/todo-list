@@ -16,7 +16,7 @@
     --dark-sapphire-blue: #273161;
 
     --radius: 5px;
-    --h-elem: 50px;
+    --h-elem: 45px;
     --padding: 20px;
     --time: .2s;
 }
@@ -31,6 +31,7 @@ body {
     display: flex;
     justify-content: center;
     padding: var(--padding);
+    font-size: 1.125rem;
 }
 
 
@@ -91,14 +92,13 @@ body * {
 .form__input {
     width: min(400px, 100%);
     height: var(--h-elem);
-    padding: 0 15px;
+    padding: 0 10px;
     background-color: var(--dark-sapphire-blue);
     border-radius: var(--radius);
-    flex-grow: 1;
     outline: none;
     
     color: inherit;
-    font-size: 1.1rem;
+    font-size: inherit;
     border: 2px solid transparent;
 }
 
@@ -114,7 +114,7 @@ body * {
     min-width: var(--h-elem);
     background-color: var(--royal-blue);
     border-radius: var(--radius);
-    font-size: 1.4rem;
+    font-size: inherit;
 
     display: grid;
     place-items: center;
@@ -139,7 +139,7 @@ body * {
 }
 
 .links__icon {
-    font-size: 1.6rem;
+    font-size: 1.5625rem;
 }
 
 
@@ -158,7 +158,7 @@ body * {
 .task {
     height: var(--h-elem);
     margin-bottom: 10px;
-    padding-left: 15px;
+    padding-left: 10px;
     background-color: var(--royal-blue-200);
     border-radius: var(--radius);
     border: 1px solid transparent;
@@ -184,7 +184,6 @@ body * {
 .task__text {
     flex-grow: 1;
     color: var(--periwinkle);
-    font-size: 1.1rem;
     user-select: none;
     overflow: hidden;
     text-wrap: nowrap;
@@ -192,7 +191,7 @@ body * {
 }
 
 .task__delete {
-    width: var(--h-elem);
+    min-width: var(--h-elem);
     height: inherit;
     background: inherit;
     border: none;
@@ -229,7 +228,7 @@ body * {
 
 .tasks:not(:has(.task))::before {
     content: "No hay tareas pendientes";
-    font-size: 35px;
+    font-size: 2.1875rem;
     font-weight: 900;
     color: var(--navy-blue);
     text-align: center;
@@ -308,9 +307,12 @@ body * {
 
 
 @media (width < 400px) {
+    html {
+        font-size: 18px;
+    }
+
     body {
         padding: 0;
-        --h-elem: 40px;
     }
     
     .main {
