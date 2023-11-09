@@ -24,21 +24,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
 SECRET_KEY = os.environ.get(
   'SECRET_KEY', # Debes definirla en railway.
-  default='django-insecure-wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
+  default='wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
+# DEBUG = True
+DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
 
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
-# RAILWAY_PUBLIC_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
-# if RAILWAY_PUBLIC_DOMAIN:
-#     ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
+RAILWAY_PUBLIC_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
+if RAILWAY_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
 
 
 
