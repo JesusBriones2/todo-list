@@ -21,12 +21,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
+# SECRET_KEY = 'django-insecure-wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
+SECRET_KEY = os.environ.get(
+  'SECRET_KEY', # Debes definirla en railway.
+  default='django-insecure-wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
+
+
 
 ALLOWED_HOSTS = []
+
+RAILWAY_PUBLIC_DOMAIN = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
+if RAILWAY_PUBLIC_DOMAIN:
+    ALLOWED_HOSTS.append(RAILWAY_PUBLIC_DOMAIN)
+
 
 
 # Application definition
@@ -49,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -123,6 +137,8 @@ STATIC_URL = 'assets/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'tasks', 'page', 'assets')
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
