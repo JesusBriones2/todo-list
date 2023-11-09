@@ -31,13 +31,13 @@
         </div>
 
         <form class="form">
+          {% csrf_token %}
           <input
           class="form__input"
           type="text"
           placeholder="Agregar item..."
           />
           <button class="fa-solid fa-plus form__button"></button>
-          {% csrf_token %}
         </form>
 
         <div class="links">
