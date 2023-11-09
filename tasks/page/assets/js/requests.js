@@ -14,7 +14,7 @@ const header = {
 
 export function saveTask(id, content, fn) {
   fetch(URLS.add, {
-    method: 'POST',
+    method: 'post',
     headers: header,
     body: JSON.stringify({ id, content }),
   })
@@ -29,7 +29,7 @@ export function saveTask(id, content, fn) {
 
 export function changeStatus(id, status) {
   fetch(URLS.update, {
-    method: 'PATCH',
+    method: 'patch',
     headers: header,
     body: JSON.stringify({ id, status }),
   })
@@ -41,7 +41,7 @@ export function changeStatus(id, status) {
 
 export function deleteTask(id) {
   fetch(URLS.delete, {
-    method: 'DELETE',
+    method: 'delete',
     headers: header,
     body: JSON.stringify({ id }),
   })
@@ -53,7 +53,7 @@ export function deleteTask(id) {
 
 export function getTasks(fn) {
   fetch(URLS.getTasks, {
-    method: 'GET',
+    method: 'get',
     headers: header,
   })
     .then((res) => res.json())
