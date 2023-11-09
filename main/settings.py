@@ -28,8 +28,8 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
+DEBUG = True
+# DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
 
 
 
