@@ -1,10 +1,10 @@
 const CSRF_TOKEN = document.querySelector('[name="csrfmiddlewaretoken"]').value
 
 const URLS = {
-  add: '/add_task',
-  update: '/update_task',
-  delete: '/delete_task',
-  getTasks: '/get_tasks',
+  add: '/add_task/',
+  update: '/update_task/',
+  delete: '/delete_task/',
+  getTasks: '/get_tasks/',
 }
 
 const header = {
