@@ -1,4 +1,8 @@
-const CSRF_TOKEN = document.querySelector('[name="csrfmiddlewaretoken"]').value
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 const URLS = {
   add: '/add_task/',
@@ -9,7 +13,7 @@ const URLS = {
 
 const header = {
   'Content-Type': 'application/json',
-  'X-CSRFToken': CSRF_TOKEN,
+  'X-CSRFToken': getCookie('csrftoken'),
 }
 
 export function saveTask(id, content, fn) {
