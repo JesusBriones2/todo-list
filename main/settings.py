@@ -27,6 +27,8 @@ SECRET_KEY = os.environ.get(
   default='wbl8f&dn&^k3d1g7ly65*gzwju2k+acz*53304(^b4l#^v%jgk'
 )
 
+print(SECRET_KEY)
+
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = 'RAILWAY_ENVIRONMENT' not in os.environ
